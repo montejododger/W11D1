@@ -1,9 +1,7 @@
 import UserForm from "./components/UserReg";
 
 function App() {
-  return (
-    <UserForm/>
-  );
+    return <UserForm />;
 }
 
 export default App;

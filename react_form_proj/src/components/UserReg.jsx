@@ -21,7 +21,13 @@ const UserForm = () => {
         if (user.email.length === 0) {
             errors.push("Must be Valid Email");
         }
+        if (user.phoneNumber.length !== 0) {
+            if (user.phoneType === "home" || user.phoneType === "mobile" || user.phoneType === "work") {
 
+            } else {
+                errors.push("If Phone Number is presented, MUST select Phone Type.")
+            }
+        }
         return errors;
     };
 
@@ -32,9 +38,34 @@ const UserForm = () => {
         };
     };
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        let errors = validate();
+        if (errors.length > 0) {
+            setErrors(errors);
+        } else {
+            setErrors([])
+            console.log(JSON.stringify(user))
+            console.log(user)
+        }
+    }
+
+    const showErrors = () => {
+        if (!errors.length) {
+            return null;
+        } 
+        return (
+            <ul>
+                {errors.map(err => <li>{err}</li>)}
+            </ul>
+        )
+    }
+
     return (
-        <form>
+        <form onSubmit={handleSubmit}>
             <div>
+                <h1>Sign Up Form!</h1>
+                {showErrors()}
                 <label>
                     Name:
                     <input
@@ -115,6 +146,8 @@ const UserForm = () => {
                         onChange={handleChange("signUp")}
                     />
                 </label>
+                <br />
+                <button>Sign Up!</button>
             </div>
         </form>
     );
